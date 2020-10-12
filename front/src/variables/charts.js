@@ -1,8 +1,4 @@
 const Chart = require("chart.js");
-//
-// Chart extension for making the bars rounded
-// Code from: https://codepen.io/jedtrow/full/ygRYgo
-//
 
 Chart.elements.Rectangle.prototype.draw = function () {
   var ctx = this._chart.ctx;
@@ -189,15 +185,15 @@ function chartOptions() {
         },
         elements: {
           point: {
-            radius: 0,
+            radius: 5,
             backgroundColor: colors.theme["primary"],
           },
           line: {
-            tension: 0.4,
-            borderWidth: 4,
-            borderColor: colors.theme["primary"],
+            tension: 0,
+            borderWidth: 2,
+            borderColor: colors.theme["warning"],
             backgroundColor: colors.transparent,
-            borderCapStyle: "rounded",
+           
           },
           rectangle: {
             backgroundColor: colors.theme["warning"],
@@ -302,7 +298,7 @@ let chartExample1 = {
           ticks: {
             callback: function (value) {
               if (!(value % 10)) {
-                return "$" + value + "k";
+                return  value + "°C";
               }
             },
           },
@@ -320,7 +316,7 @@ let chartExample1 = {
             content += label;
           }
 
-          content += "$" + yLabel + "k";
+          content +=  yLabel + "°C";
           return content;
         },
       },

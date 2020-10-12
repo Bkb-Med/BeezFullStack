@@ -6,12 +6,13 @@ import { Switch, Route } from "react-router-dom";
 import Topbar from "./Topbar";
 import ApiariesTbl from "components/Contents/ApiariesTbl";
 import MainDash from "components/Contents/MainDash";
+import Indicators from "components/Contents/indicators"
 const Content = ({ sidebarIsOpen, toggleSidebar }) => (
   <Container
     fluid
     className={classNames("content", { "is-open": sidebarIsOpen })}
   >
-    <Topbar />
+   
     <div className="py-lg-7">
       <Switch>
         <Route exact path="/" render={(props) => <MainDash {...props} />} />
@@ -20,7 +21,11 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
           path="/apiaries"
           render={(props) => <ApiariesTbl {...props} />}
         />
-
+        <Route
+          exact
+          path="/indicators"
+          render={(props) => <Indicators {...props} />}
+        />
         <Route exact path="/Pages" component={() => "Pages"} />
         <Route exact path="/faq" component={() => "FAQ"} />
         <Route exact path="/contact" component={() => "Contact"} />

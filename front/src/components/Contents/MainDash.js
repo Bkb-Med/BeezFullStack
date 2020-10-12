@@ -1,23 +1,24 @@
 import React from "react";
-// node.js library that concatenates classes (strings)
-import classnames from "classnames";
-// javascipt plugin for creating charts
+import { connect } from "react-redux";
+import { getEndroits } from '../store/actions/endroitsAction'
+import { getRuche } from '../store/actions/rucheAction'
+import { getTemps } from '../store/actions/tempsAction'
+import { getTraffics } from '../store/actions/trafficAction'
+import {getWeights} from '../store/actions/weightsAction'
+
+
+
 import Chart from "chart.js";
-// react plugin used to create charts
+
 import { Line, Bar } from "react-chartjs-2";
-// reactstrap components
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  Button,
+ 
   Card,
   CardHeader,
   CardBody,
-  NavItem,
-  NavLink,
-  Nav,
-  Progress,
-  Table,
-  Container,
+   Container,
   Row,
   Col,
   CardTitle,
@@ -27,12 +28,12 @@ import {
   DropdownToggle,
 } from "reactstrap";
 import {
-  faChartBar,
-  faChartPie,
-  faUsers,
+
+  faMapSigns,
+  
   faPercent,
-  faArrowDown,
-  faArrowUp,
+  faThermometerQuarter,
+  faHourglassEnd
 } from "@fortawesome/free-solid-svg-icons";
 // core components
 import {
@@ -42,12 +43,17 @@ import {
   chartExample2,
 } from "variables/charts";
 
+
 class maindash extends React.Component {
   constructor(props) {
     super(props);
+   
     this.state = {
       activeNav: 1,
       chartExample1Data: "data1",
+      locationDropDownValue: "endroit",
+      rucheDropDownValue: "ruche",
+      
     };
     if (window.Chart) {
       parseOptions(Chart, chartOptions());
@@ -61,7 +67,100 @@ class maindash extends React.Component {
         this.state.chartExample1Data === "data1" ? "data2" : "data1",
     });
   };
+  componentDidMount() {
+    this.props.getEndroits()
+  }
+ 
+  onClickEndroitHandler = (e) => {
+    this.setState({ locationDropDownValue: e.reference });
+    this.props.getRuche(e.id)
+    
+  };
+  onClickRucheHandler = (e) => {
+    this.setState({ rucheDropDownValue: e.reference });
+    this.props.getTraffics(e.id)
+    this.props.getTemps(e.id)
+    this.props.getWeights(e.id)
+   
+  };
+  filterlastValue = (data)=> {
+      var mostRecentDate = new Date(Math.max.apply(null, data.map(e => {
+        return new Date(e.dateTime);
+      })));
+      var mostRecentObject = data.filter(e => {
+        var d = new Date(e.dateTime);
+        return d.getTime() == mostRecentDate.getTime();
+      })[0];
+      
+      return mostRecentObject;
+
+ }
+  formatDateAndTime = (date) => {
+    var d = []
+    d = date?.slice(0, 10).split("-");
+    if (typeof (d) != 'undefined') {
+      return d[2] + "/" + d[1] + "/" + d[0]
+    }
+  };
+    
   render() {
+   
+    const { endroits } = this.props.endroits
+    
+    let endroitsItems = endroits.map(e => {
+      return (
+        <DropdownItem key={e.id} onClick={() => this.onClickEndroitHandler(e)}>
+          {e.reference}
+        </DropdownItem>
+      );
+    });
+    const { ruches } =this.props.ruches
+    
+     let rucheItems= ruches.map((e) => {
+      return (
+        <DropdownItem key={e.id} onClick={() => this.onClickRucheHandler(e)}>
+          {e.reference}
+        </DropdownItem>
+      );
+     });
+    const { traffics } = this.props.traffics
+    const { temps } = this.props.temps
+    const {weights}=this.props.weights
+    let lastTFvalue = this.filterlastValue(traffics)
+    let lastTMvalue = this.filterlastValue(temps)
+    let lastWGvalue = this.filterlastValue(weights)
+    
+    let dtTFvalue = this.formatDateAndTime(lastTFvalue?.dateTime)
+    let dtTMvalue = this.formatDateAndTime(lastTMvalue?.dateTime)
+    let dtWGvalue = this.formatDateAndTime(lastWGvalue?.dateTime)
+    const dataTM = {
+    
+      labels: temps.map(e => {
+        return this.formatDateAndTime(e.dateTime)
+      }),
+      datasets: [
+        {
+        
+          data: temps.map(e => {
+        return e.value
+      }),
+        },
+      ],
+    };
+    const dataTF = {
+    
+      labels: traffics.map(e => {
+        return this.formatDateAndTime(e.dateTime)
+      }),
+      datasets: [
+        {
+        
+          data: traffics.map(e => {
+        return e.value
+      }),
+        },
+      ],
+    };
     return (
       <>
         {/* Page content */}
@@ -82,23 +181,19 @@ class maindash extends React.Component {
                         tag="h6"
                         className=" text-white text-muted mb-0"
                       >
-                        Choose an apiary :{"  "}
+                        Selectionner une Ruche :{"  "}
                         <UncontrolledDropdown
                           setActiveFromChild
                           className="ml-3"
                         >
                           <DropdownToggle
                             size="sm"
-                            className="cursor-pointer"
+                            className="cursor-pointer text-lowercase text-capitalize"
                             caret
                           >
-                            Location
+                            {this.state.locationDropDownValue}
                           </DropdownToggle>
-                          <DropdownMenu>
-                            <DropdownItem tag="a" href="/blah" active>
-                              MEllila centre
-                            </DropdownItem>
-                          </DropdownMenu>
+                          <DropdownMenu>{endroitsItems}</DropdownMenu>
                         </UncontrolledDropdown>
                         <UncontrolledDropdown
                           setActiveFromChild
@@ -106,16 +201,12 @@ class maindash extends React.Component {
                         >
                           <DropdownToggle
                             size="sm"
-                            className="cursor-pointer"
+                            className="cursor-pointer text-lowercase text-capitalize"
                             caret
                           >
-                            Reference
+                            {this.state.rucheDropDownValue}
                           </DropdownToggle>
-                          <DropdownMenu>
-                            <DropdownItem tag="a" href="/blah" active>
-                              R0256
-                            </DropdownItem>
-                          </DropdownMenu>
+                          <DropdownMenu>{rucheItems}</DropdownMenu>
                         </UncontrolledDropdown>{" "}
                       </CardTitle>
                     </div>
@@ -138,23 +229,30 @@ class maindash extends React.Component {
                       >
                         Traffic
                       </CardTitle>
-                      <span className="h4 font-weight-bold mb-0">350,897</span>
+                      <span className="h4 font-weight-bold mb-0">
+                        {" "}
+                        {lastTFvalue?.value}
+                      </span>
                     </div>
                     <Col className="col-auto">
                       <div className="icon icon-shape bg-danger text-white rounded-circle shadow">
-                        <FontAwesomeIcon icon={faChartBar} />
+                        <FontAwesomeIcon icon={faMapSigns} />
                       </div>
                     </Col>
                   </Row>
-                  <p className="mt-3 mb-0 text-muted text-sm">
-                    <span className="text-success mr-2">
-                      <FontAwesomeIcon icon={faArrowUp} /> 3.48%
+                  <p className="mt-3 mb-0 text-muted text-sm ">
+                    <span className="text-nowrap ">
+                      <small> Dernière mise à jour :</small>
                     </span>{" "}
-                    <span className="text-nowrap">Since last month</span>
+                    <br></br>
+                    <span className="d-flex text-success mr-2 text-right">
+                      {dtTFvalue}
+                    </span>
                   </p>
                 </CardBody>
               </Card>
             </Col>
+
             <Col lg="6" xl="3">
               <Card className="card-stats mb-4 mb-xl-0">
                 <CardBody>
@@ -164,51 +262,24 @@ class maindash extends React.Component {
                         tag="h6"
                         className="text-uppercase text-muted mb-0"
                       >
-                        New users
+                        Température
                       </CardTitle>
-                      <span className="h4 font-weight-bold mb-0">2,356</span>
-                    </div>
-                    <Col className="col-auto">
-                      <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
-                        <FontAwesomeIcon icon={faChartPie} />
-                      </div>
-                    </Col>
-                  </Row>
-                  <p className="mt-3 mb-0 text-muted text-sm">
-                    <span className="text-danger mr-2">
-                      <FontAwesomeIcon icon={faArrowDown} />
-                      3.48%
-                    </span>{" "}
-                    <span className="text-nowrap">Since last week</span>
-                  </p>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col lg="6" xl="3">
-              <Card className="card-stats mb-4 mb-xl-0">
-                <CardBody>
-                  <Row>
-                    <div className="col">
-                      <CardTitle
-                        tag="h6"
-                        className="text-uppercase text-muted mb-0"
-                      >
-                        Sales
-                      </CardTitle>
-                      <span className="h4 font-weight-bold mb-0">924</span>
+                      <span className="h4 font-weight-bold mb-0">{lastTMvalue?.value}</span>
                     </div>
                     <Col className="col-auto">
                       <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                        <FontAwesomeIcon icon={faUsers} />
+                        <FontAwesomeIcon icon={faThermometerQuarter} />
                       </div>
                     </Col>
                   </Row>
-                  <p className="mt-3 mb-0 text-muted text-sm">
-                    <span className="text-warning mr-2">
-                      <FontAwesomeIcon icon={faArrowDown} />
-                      1.10%
+                  <p className="mt-3 mb-0 text-muted text-sm ">
+                    <span className="text-nowrap ">
+                      <small> Dernière mise à jour :</small>
                     </span>{" "}
-                    <span className="text-nowrap">Since yesterday</span>
+                    <br></br>
+                    <span className="d-flex text-success mr-2 text-right">
+                      {dtTMvalue}
+                    </span>
                   </p>
                 </CardBody>
               </Card>
@@ -222,65 +293,45 @@ class maindash extends React.Component {
                         tag="h6"
                         className="text-uppercase text-muted mb-0"
                       >
-                        Performance
+                        Poids
                       </CardTitle>
-                      <span className="h4 font-weight-bold mb-0">49,65%</span>
+                      <span className="h4 font-weight-bold mb-0">{lastWGvalue?.value}</span>
                     </div>
                     <Col className="col-auto">
                       <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                        <FontAwesomeIcon icon={faPercent} />
+                        <FontAwesomeIcon icon={  faHourglassEnd} />
                       </div>
                     </Col>
                   </Row>
-                  <p className="mt-3 mb-0 text-muted text-sm">
-                    <span className="text-success mr-2">
-                      <FontAwesomeIcon icon={faArrowUp} /> 12%
+                  <p className="mt-3 mb-0 text-muted text-sm ">
+                    <span className="text-nowrap ">
+                      <small> Dernière mise à jour :</small>
                     </span>{" "}
-                    <span className="text-nowrap">Since last month</span>
+                    <br></br>
+                    <span className="d-flex text-success mr-2 text-right">
+                      {dtWGvalue}
+                    </span>
                   </p>
                 </CardBody>
               </Card>
             </Col>
           </Row>
-          <Row>
-            <Col className="mb-5 mb-xl-0 " xl="8">
+        
+        </Container>
+        <Container className="mt-2 mb-auto" fluid>
+            <Row xs="10">
+            <Col className="mb-5 mb-xl-0 " xl="12">
               <Card className="bg-gradient-default shadow">
                 <CardHeader className="bg-transparent">
                   <Row className="align-items-center">
                     <div className="col">
                       <h6 className="text-uppercase text-light ls-1 mb-1">
-                        Overview
+                        Historique
                       </h6>
-                      <h5 className="text-white mb-0">Sales value</h5>
+                      <h5 className="text-white mb-0">Température</h5>
                     </div>
                     <div className="col">
-                      <Nav className="justify-content-end" pills>
-                        <NavItem>
-                          <NavLink
-                            className={classnames("py-2 px-3", {
-                              active: this.state.activeNav === 1,
-                            })}
-                            href="#pablo"
-                            onClick={(e) => this.toggleNavs(e, 1)}
-                          >
-                            <span className="d-none d-md-block">Month</span>
-                            <span className="d-md-none">M</span>
-                          </NavLink>
-                        </NavItem>
-                        <NavItem>
-                          <NavLink
-                            className={classnames("py-2 px-3", {
-                              active: this.state.activeNav === 2,
-                            })}
-                            data-toggle="tab"
-                            href="#pablo"
-                            onClick={(e) => this.toggleNavs(e, 2)}
-                          >
-                            <span className="d-none d-md-block">Week</span>
-                            <span className="d-md-none">W</span>
-                          </NavLink>
-                        </NavItem>
-                      </Nav>
+                     
                     </div>
                   </Row>
                 </CardHeader>
@@ -288,7 +339,7 @@ class maindash extends React.Component {
                   {/* Chart */}
                   <div className="chart">
                     <Line
-                      data={chartExample1[this.state.chartExample1Data]}
+                      data={dataTM}
                       options={chartExample1.options}
                       getDatasetAtEvent={(e) => console.log(e)}
                     />
@@ -296,15 +347,13 @@ class maindash extends React.Component {
                 </CardBody>
               </Card>
             </Col>
-            <Col xl="4">
+            <Col xl="12">
               <Card className="shadow">
                 <CardHeader className="bg-transparent">
                   <Row className="align-items-center">
                     <div className="col">
-                      <h6 className="text-uppercase text-muted ls-1 mb-1">
-                        Performance
-                      </h6>
-                      <h2 className="mb-0">Total orders</h2>
+                     
+                      <h2 className="mb-0">Traffic</h2>
                     </div>
                   </Row>
                 </CardHeader>
@@ -312,7 +361,7 @@ class maindash extends React.Component {
                   {/* Chart */}
                   <div className="chart">
                     <Bar
-                      data={chartExample2.data}
+                      data={dataTF}
                       options={chartExample2.options}
                     />
                   </div>
@@ -325,5 +374,27 @@ class maindash extends React.Component {
     );
   }
 }
-
-export default maindash;
+function mapStateToProps(state) {
+  return {
+    endroits: state.endroits, //this.props.endroits
+    ruches: state.ruches,
+    temps: state.temps,
+    weights: state.weights,
+    traffics: state.traffics,
+    
+        };
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    getRuche: idEnd => dispatch(getRuche(idEnd)),
+    getEndroits: () => dispatch(getEndroits()), 
+    getTemps: idRch => dispatch(getTemps(idRch)),
+    getTraffics: idRch => dispatch(getTraffics(idRch)),
+    getWeights:idRch => dispatch(getWeights(idRch))
+   
+  };
+};
+maindash.defaultProps = {
+    recentTrafic: []
+};
+export default connect(mapStateToProps, mapDispatchToProps)(maindash);

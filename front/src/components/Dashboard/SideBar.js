@@ -51,7 +51,7 @@ const SideBar = ({ isOpen, toggle }) => (
           </NavLink>
         </NavItem>
         <NavItem className="nav-item-dashboard rounded-pill">
-          <NavLink tag={Link} to={"/about"} style={{ color: "#fff" }}>
+          <NavLink tag={Link} to={"/indicators"} style={{ color: "#fff" }}>
             <FontAwesomeIcon icon={faCloud} className="mr-2" />
             Indicators
           </NavLink>

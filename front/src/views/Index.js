@@ -22,8 +22,15 @@ const Index = () => {
 
   return (
     <>
-      <MainNavbar /> <Login /> <Overview />
-      <CardsFooter />
+      <BrowserRouter>
+        <SideBar toggle={toggleSidebar} isOpen={sidebarIsOpen} />
+        <div>
+          <Content
+            toggleSidebar={toggleSidebar}
+            sidebarIsOpen={sidebarIsOpen}
+          />
+        </div>
+      </BrowserRouter>
     </>
   );
 };
