@@ -8,14 +8,16 @@ import "assets/vendor/nucleo/css/nucleo.css";
 import "assets/vendor/font-awesome/css/font-awesome.min.css";
 import "assets/scss/beez-app-system.scss?v1.1.0";
 
-import Index from "views/Index.js";
-
+import Authen from "views/Index.js";
+import MainDash from "components/Index.js"
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact render={(props) => <Index {...props} />} />
-        <Redirect to="/" />
+        <Route exact path="/" render={(props) => <MainDash {...props} />} />
+        <Route exact path="/login" render={(props) => <Authen {...props} />} />
+       
+       <Redirect to='/login'/>
       </Switch>
     </BrowserRouter>
   </Provider>,

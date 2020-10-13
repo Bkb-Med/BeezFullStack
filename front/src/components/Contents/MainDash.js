@@ -5,7 +5,7 @@ import { getRuche } from '../store/actions/rucheAction'
 import { getTemps } from '../store/actions/tempsAction'
 import { getTraffics } from '../store/actions/trafficAction'
 import {getWeights} from '../store/actions/weightsAction'
-
+import axios from "axios";
 
 
 import Chart from "chart.js";
@@ -68,7 +68,10 @@ class maindash extends React.Component {
     });
   };
   componentDidMount() {
+
+   
     this.props.getEndroits()
+    console.log(localStorage.getItem('login'))
   }
  
   onClickEndroitHandler = (e) => {

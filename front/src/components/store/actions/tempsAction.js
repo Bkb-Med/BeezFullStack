@@ -3,12 +3,24 @@ import axios from "axios";
 
 export const getTemps = (id) => async dispatch => {
   try {
-    const res = await axios.get(`http://localhost:8080/Temperature/ruche/${id}`);
-
-    dispatch({
-      type: GET_TEMPS,
-      payload: res.data
+    const store = JSON.parse(localStorage.getItem('login'));
+    const authAxios = axios.create({
+      baseURL: 'http://localhost:8080',
+      headers: {
+        Authorization: `Bearer ${store.token}`,
+      },
     });
+    authAxios.get(`/Temperature/ruche/${id}`).then(response => {
+     
+      const data = response.data;
+      dispatch({
+        type: GET_TEMPS,
+        payload:
+          data
+      });
+    }); 
+
+  
   } catch (e) {
     dispatch({
       type: TEMPS_ERROR,

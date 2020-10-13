@@ -3,7 +3,16 @@ import axios from "axios";
 
 export const getWeights = (id) => async dispatch => {
   try {
-    const res = await axios.get(`http://localhost:8080/Weight/ruche/${id}`);
+    const store = JSON.parse(localStorage.getItem('login'));
+    const authAxios = axios.create({
+      baseURL: 'http://localhost:8080',
+      headers: {
+        Authorization: `Bearer ${store.token}`,
+      },
+    });
+    const res = await authAxios.get(`/Weight/ruche/${id}`);
+  
+   
 
     dispatch({
       type: GET_WEIGHTS,

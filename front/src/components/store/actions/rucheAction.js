@@ -3,8 +3,15 @@ import axios from "axios";
 
 export const getRuche = (id) => async dispatch => {
   try {
-    const res = await axios.get(`http://localhost:8080/endroit/ruches/${id}`);
-
+    const store = JSON.parse(localStorage.getItem('login'));
+    const authAxios = axios.create({
+      baseURL: 'http://localhost:8080',
+      headers: {
+        Authorization: `Bearer ${store.token}`,
+      },
+    });
+    const res = await authAxios.get(`/endroit/ruches/${id}`);
+    
     dispatch({
       type: GET_RUCHE,
       payload: res.data

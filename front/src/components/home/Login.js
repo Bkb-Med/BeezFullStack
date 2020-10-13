@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// nodejs library that concatenates classes
+import { BrowserRouter, Route, Switch, Redirectimport , useHistory ,withRouter } from "react-router-dom";
 import classnames from "classnames";
+import axios from 'axios';
 
-// reactstrap components
 import {
   Button,
   Card,
@@ -21,7 +21,56 @@ import {
 } from "reactstrap";
 
 class Login extends React.Component {
-  state = {};
+  constructor() {
+    super();
+    this.state = {
+      email: null,
+      password: null,
+      login: false,
+      store:null,
+    }
+  }
+
+  
+  login() {
+
+    const { history } = this.props
+    const user = {
+      userName: this.state.email,
+      password: this.state.password,
+      
+    };
+    try {
+      console.log(user);
+      fetch('http://localhost:8080/authenticate',{
+        method: "POST",
+        headers: {
+          'content-type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(user)}
+      ).then(res => {
+       res.text().then((result) => {
+         
+         localStorage.setItem('login', JSON.stringify({
+           login: true,
+           token: result,
+           
+         }))
+         this.setState({ login: true })
+         var rs = result.split(":")[0];
+         rs = rs.split('"')[1];
+         
+         
+         if (rs==="timestamp") { history.push("/login") }else{history.push("/") };
+        })
+      })
+     
+    } catch (e) {
+      //console.log(e)
+    }
+}
+
   render() {
     return (
       <>
@@ -121,6 +170,7 @@ class Login extends React.Component {
                               onBlur={(e) =>
                                 this.setState({ emailFocused: false })
                               }
+                              onChange={(event)=>{this.setState({email:event.target.value})}}
                             />
                           </InputGroup>
                         </FormGroup>
@@ -145,6 +195,7 @@ class Login extends React.Component {
                               onBlur={(e) =>
                                 this.setState({ passwordFocused: false })
                               }
+                              onChange={(event)=>{this.setState({password:event.target.value})}}
                             />
                           </InputGroup>
                         </FormGroup>
@@ -162,7 +213,7 @@ class Login extends React.Component {
                           </label>
                         </div>
                         <div className="text-center">
-                          <Button className="my-4 btn-custom">Sign in</Button>
+                          <Button className="my-4 btn-custom" onClick={()=>{this.login()}}>Sign in</Button>
                         </div>
                       </Form>
                     </CardBody>
@@ -190,4 +241,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);

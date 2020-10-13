@@ -5,11 +5,19 @@ export const getTraffics = (id) => async dispatch => {
 
 
   try {
-    axios.get(`http://localhost:8080/Traffic/ruche/${id}`).then(response => {
+       const store = JSON.parse(localStorage.getItem('login'));
+    const authAxios = axios.create({
+      baseURL: 'http://localhost:8080',
+      headers: {
+        Authorization: `Bearer ${store.token}`,
+      },
+    });
+    authAxios.get(`/Traffic/ruche/${id}`).then(response => {
      
       const data = response.data;
       dispatch({
-        type: GET_TRAFFICS, payload:
+        type: GET_TRAFFICS,
+        payload:
           data
       });
     }); 

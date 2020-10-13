@@ -73,7 +73,7 @@ public class BeezApplication {
 			rucheRepo.save(r4);
 			rucheRepo.save(r5);
 			rucheRepo.save(r6);
-			for(int i=0;i<10;i++){
+			for(int i=1;i<10;i++){
 				tempRepo.save(new TempSensor("TM01", 6.0+i, date, r1));
 				tempRepo.save(new TempSensor("TM02", 2.2*i, date, r2));
 				tempRepo.save(new TempSensor("TM03", 2.2*i+10.5, date, r3));
