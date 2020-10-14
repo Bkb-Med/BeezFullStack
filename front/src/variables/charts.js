@@ -354,7 +354,7 @@ let chartExample2 = {
         {
           ticks: {
             callback: function (value) {
-              if (!(value % 10)) {
+              if (!(value % 40)) {
                 //return '$' + value + 'k'
                 return value;
               }

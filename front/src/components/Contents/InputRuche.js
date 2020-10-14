@@ -19,7 +19,8 @@ class InputRuche  extends React.Component {
             Time: null,
             ENDid: 1,
            SENDED: false,
-            modal: false
+      modal: false,
+            endroit: [],
          };
         this.toggle = this.toggle.bind(this);  
   };
@@ -42,7 +43,7 @@ class InputRuche  extends React.Component {
       dateTime: this.state.Date + "T" + this.state.Time,
       endroit: {
         id: this.state.ENDid,
-        
+       
       }
     };
 
@@ -61,7 +62,12 @@ class InputRuche  extends React.Component {
         },
         body: JSON.stringify(ruche)}
        ).then(res => {
-         console.log("message", res)
+            this.setState({
+              endroit: {
+                id: this.state.ENDid,
+                reference: "Selectionner un Endroit"
+              } })
+         this.props.handleTable(this.state.endroit);
          this.toggle();
        })
     

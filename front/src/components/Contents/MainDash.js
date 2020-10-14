@@ -230,7 +230,7 @@ class maindash extends React.Component {
                       </CardTitle>
                       <span className="h4 font-weight-bold mb-0">
                         {" "}
-                        {lastTFvalue?.value}
+                        {lastTFvalue?.value} bees
                       </span>
                     </div>
                     <Col className="col-auto">
@@ -263,7 +263,7 @@ class maindash extends React.Component {
                       >
                         Température
                       </CardTitle>
-                      <span className="h4 font-weight-bold mb-0">{lastTMvalue?.value}</span>
+                      <span className="h4 font-weight-bold mb-0">{lastTMvalue?.value} °C</span>
                     </div>
                     <Col className="col-auto">
                       <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -294,7 +294,7 @@ class maindash extends React.Component {
                       >
                         Poids
                       </CardTitle>
-                      <span className="h4 font-weight-bold mb-0">{lastWGvalue?.value}</span>
+                      <span className="h4 font-weight-bold mb-0">{lastWGvalue?.value} % </span>
                     </div>
                     <Col className="col-auto">
                       <div className="icon icon-shape bg-info text-white rounded-circle shadow">

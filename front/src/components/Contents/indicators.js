@@ -66,17 +66,17 @@ formatDateAndTime = (date) => {
     }
   };
   formatValue = (v) => {
-    if (v < 10) {
+    if (v <20) {
       return (<Badge color="primary" className="badge-dot mr-4">
                           <i className="bg-warning" />
                           faible
                         </Badge>)
-    } else if (v >= 10 && v<14) {
+    } else if (v >= 20 && v<35) {
       return (<Badge color="success" className="badge-dot mr-4">
                           <i className="bg-warning" />
                          moyen
                         </Badge>)
-    } else if(v>=14){
+    } else if(v>=35){
       return (<Badge color="warning" className="badge-dot mr-4">
                           <i className="bg-warning" />
                          haut

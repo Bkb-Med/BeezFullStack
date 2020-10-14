@@ -9,9 +9,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import javax.annotation.PostConstruct;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -45,7 +47,7 @@ public class BeezApplication {
 	    adminRepository.save(admin1);
         agentRepository.save(agent1);
 		List<User> users = Stream.of(
-				new User(102, "user1", admin1.getCin(), admin1.getEmail()),
+				new User(102, admin1.getEmail(), admin1.getCin(), admin1.getEmail()),
 				new User(103, "user2", "pwd2", "user2@gmail.com"),
                 new User(103, "user3", agent1.getCin(), agent1.getEmail())
 		).collect(Collectors.toList());
@@ -74,17 +76,29 @@ public class BeezApplication {
 			rucheRepo.save(r5);
 			rucheRepo.save(r6);
 			for(int i=1;i<10;i++){
-				tempRepo.save(new TempSensor("TM01", 6.0+i, date, r1));
-				tempRepo.save(new TempSensor("TM02", 2.2*i, date, r2));
-				tempRepo.save(new TempSensor("TM03", 2.2*i+10.5, date, r3));
-
-				trafficRepo.save(new TrafficSensor("TF01", 10*i, date, r1));
-				trafficRepo.save(new TrafficSensor("TF02", 20*i, date, r2));
-				trafficRepo.save(new TrafficSensor("TF03", 16*i, date, r3));
-
-				weightRepo.save(new WeightSensor("WS01", 10*i, date, r1));
-				weightRepo.save(new WeightSensor("WS02", 8*i, date, r2));
-				weightRepo.save(new WeightSensor("WS03", 6*i, date, r3));
+				Random rand = new Random();
+				long rangebegin = Timestamp.valueOf("2016-02-08 00:00:00").getTime();
+				long rangeend = Timestamp.valueOf("2020-02-08 00:58:00").getTime();
+				long diff = rangeend - rangebegin + 1;
+				Timestamp randdt = new Timestamp(rangebegin + (long)(Math.random() * diff));
+				tempRepo.save(new TempSensor("TM01", Math.round((rand.nextInt(40)+i)*100)/100.0d, randdt, r1));
+				tempRepo.save(new TempSensor("TM02", Math.round((rand.nextInt(36))*100)/100.0d, randdt, r2));
+				tempRepo.save(new TempSensor("TM03", Math.round((rand.nextInt(27))*100)/100.0d, randdt, r3));
+				tempRepo.save(new TempSensor("TM04", Math.round((rand.nextInt(40)+i)*100)/100.0d, randdt, r4));
+				tempRepo.save(new TempSensor("TM05", Math.round((rand.nextInt(36))*100)/100.0d, randdt, r5));
+				tempRepo.save(new TempSensor("TM06", Math.round((rand.nextInt(27))*100)/100.0d, randdt, r6));
+				trafficRepo.save(new TrafficSensor("TF01", Math.round((rand.nextInt(40)*i)*1000)/1000.0d, randdt, r1));
+				trafficRepo.save(new TrafficSensor("TF02", Math.round((rand.nextInt(12)*i)*1000)/1000.0d, randdt, r2));
+				trafficRepo.save(new TrafficSensor("TF03", Math.round((rand.nextInt(55)*i)*1000)/1000.0d, randdt, r3));
+				trafficRepo.save(new TrafficSensor("TF04", Math.round((rand.nextInt(40)*i)*1000)/1000.0d, randdt, r4));
+				trafficRepo.save(new TrafficSensor("TF05", Math.round((rand.nextInt(12)*i)*1000)/1000.0d, randdt, r5));
+				trafficRepo.save(new TrafficSensor("TF06", Math.round((rand.nextInt(55)*i)*1000)/1000.0d, randdt, r6));
+				weightRepo.save(new WeightSensor("WS01", Math.round((rand.nextInt(9)*i)*100)/100.0d, randdt, r1));
+				weightRepo.save(new WeightSensor("WS02", Math.round((rand.nextInt(12)*i)*100)/100.0d, randdt, r2));
+				weightRepo.save(new WeightSensor("WS03", Math.round((rand.nextInt(15)*i)*100)/100.0d, randdt, r3));
+				weightRepo.save(new WeightSensor("WS04", Math.round((rand.nextInt(9)*i)*100)/100.0d, randdt, r4));
+				weightRepo.save(new WeightSensor("WS05", Math.round((rand.nextInt(12)*i)*100)/100.0d, randdt, r5));
+				weightRepo.save(new WeightSensor("WS06", Math.round((rand.nextInt(15)*i)*100)/100.0d, randdt, r6));
 			}
 
 

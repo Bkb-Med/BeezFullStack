@@ -90,11 +90,11 @@ class Login extends React.Component {
               <Col lg="6">
                 <h3 className="display-3 text-white">
                   Beez App
-                  <span className="text-white">a simple web application</span>
+                  <span className="text-white">Une Application Web simple</span>
                 </h3>
                 <p className="lead text-white">
-                  Powerful website to monitor your data and manage your apiaries
-                  wherever they are.
+                  Site Web puissant pour surveiller vos données et gérer vos ruchers
+                  où qu'ils soient.
                 </p>
                 <div className="btn-wrapper">
                   <Button
@@ -103,7 +103,7 @@ class Login extends React.Component {
                     to="/register-page"
                     tag={Link}
                   >
-                    Learn More
+                    Voir plus 
                   </Button>
                 </div>
               </Col>
@@ -112,7 +112,7 @@ class Login extends React.Component {
                   <Card className="bg-gradient-lighter border-0">
                     <CardHeader className="bg-white pb-5">
                       <div className="text-muted text-center mb-3">
-                        <small>Sign in with</small>
+                        <small>Se connecter avec</small>
                       </div>
                       <div className="btn-wrapper text-center">
                         <Button
@@ -147,7 +147,7 @@ class Login extends React.Component {
                     </CardHeader>
                     <CardBody className="px-lg-5 py-lg-5">
                       <div className="text-center text-muted mb-4">
-                        <small>Or sign in with credentials</small>
+                        <small>Ou connectez-vous avec vos identifiants</small>
                       </div>
                       <Form role="form">
                         <FormGroup
@@ -209,11 +209,11 @@ class Login extends React.Component {
                             className="custom-control-label"
                             htmlFor="customCheckLogin2"
                           >
-                            <span>Remember me</span>
+                            <span>Souviens de moi</span>
                           </label>
                         </div>
                         <div className="text-center">
-                          <Button className="my-4 btn-custom" onClick={()=>{this.login()}}>Sign in</Button>
+                          <Button className="my-4 btn-custom" onClick={()=>{this.login()}}>Se connecter</Button>
                         </div>
                       </Form>
                     </CardBody>

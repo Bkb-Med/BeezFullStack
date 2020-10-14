@@ -29,31 +29,31 @@ const SideBar = ({ isOpen, toggle }) => (
     </div>
     <div className="side-menu ">
       <Nav vertical className="list-unstyled pb-3">
-        <h5 className="text-menusb">Main menu</h5>
+        <h5 className="text-menusb">Menu Principal</h5>
         <DropdownItem divider />
         <br />
         <NavItem className="nav-item-dashboard rounded-pill">
           <NavLink tag={Link} to={"/"} style={{ color: "#fff" }}>
             <FontAwesomeIcon icon={faWarehouse} className="mr-2" />
-            Dashboard
+            Tableau de bord
           </NavLink>
         </NavItem>
         <NavItem className="nav-item-dashboard rounded-pill">
           <NavLink tag={Link} to={"/apiaries"} style={{ color: "#fff" }}>
             <FontAwesomeIcon icon={faBoxes} className="mr-2" />
-            Apiaries
+            Ruchers
           </NavLink>
         </NavItem>
         <NavItem className="nav-item-dashboard rounded-pill">
           <NavLink tag={Link} to={"/about"} style={{ color: "#fff" }}>
             <FontAwesomeIcon icon={faMapMarkedAlt} className="mr-2" />
-            Location
+            Endroits
           </NavLink>
         </NavItem>
         <NavItem className="nav-item-dashboard rounded-pill">
           <NavLink tag={Link} to={"/indicators"} style={{ color: "#fff" }}>
             <FontAwesomeIcon icon={faCloud} className="mr-2" />
-            Indicators
+            Capteur
           </NavLink>
         </NavItem>
         <NavItem className="nav-item-dashboard rounded-pill">
@@ -67,7 +67,7 @@ const SideBar = ({ isOpen, toggle }) => (
         <NavItem className="nav-item-dashboard rounded-pill">
           <NavLink tag={Link} to={"/about"} style={{ color: "#fff" }}>
             <FontAwesomeIcon icon={faQuestion} className="mr-2" />
-            Contact Us
+            Paramètres 
           </NavLink>
         </NavItem>
         {/*<SubMenu title="Pages" icon={faCopy} items={submenus[1]} />*/}

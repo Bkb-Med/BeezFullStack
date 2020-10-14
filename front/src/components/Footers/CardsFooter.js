@@ -28,8 +28,8 @@ class CardsFooter extends React.Component {
         <footer className="footer has-cards">
           <Container className="container-lg">
             <Row>
-              <h3 className="text-primary font-weight-900 mb-6">
-                Our services include
+              <h3 className="text-primary font-weight-900 mb-6">              
+               Nos services comprennent
               </h3>
 
               <CardDeck>
@@ -43,14 +43,14 @@ class CardsFooter extends React.Component {
 
                   <CardBody>
                     <CardTitle>Cloud Storage</CardTitle>
-                    <CardSubtitle className="card-notav-text">
-                      not available
+                    <CardSubtitle className="card-notav-text">          
+                         indisponible
                     </CardSubtitle>
                     <CardText>
-                      Store all your data in cloud for futher analyzing .
+                      Stockez toutes vos données dans le cloud pour une analyse plus approfondie.
                     </CardText>
                     <CardText>
-                      <small className="text-muted">Comming soon.</small>
+                      <small className="text-muted">Bientôt disponible.</small>
                     </CardText>
                   </CardBody>
                 </Card>
@@ -64,15 +64,15 @@ class CardsFooter extends React.Component {
                   <CardBody>
                     <CardTitle>Data Analytics</CardTitle>
                     <CardSubtitle className="card-av-text">
-                      Available
+                        Disponible
                     </CardSubtitle>
                     <CardText>
-                      Use machine learning to analyse your data
-                      (temperature-weights-traffics) and predict futur action.
+                      Utilisez l'apprentissage automatique pour analyser vos données
+                      (température-poids-trafics) et prédire l'action future.
                     </CardText>
                     <CardText>
-                      <small className="text-muted">
-                        Last updated 15 days ago
+                      <small className="text-muted">          
+                         Dernière mise à jour il y a 15 jours
                       </small>
                     </CardText>
                   </CardBody>
@@ -87,15 +87,15 @@ class CardsFooter extends React.Component {
                   <CardBody>
                     <CardTitle>Business Intelligence</CardTitle>
                     <CardSubtitle className="card-av-text">
-                      Available
+                     Disponible
                     </CardSubtitle>
                     <CardText>
-                      With our handy Dashboard look after your apiaries wherever
-                      your are.{" "}
+                     Avec notre tableau de bord pratique, prenez soin de vos ruchers où que vous soyez
+                      tu es.{" "}
                     </CardText>
                     <CardText>
                       <small className="text-muted">
-                        Last updated 3 mins ago
+                        Dernière mise à jour il y a 3 minutes
                       </small>
                     </CardText>
                   </CardBody>
@@ -106,11 +106,11 @@ class CardsFooter extends React.Component {
           <Container>
             <Row className="row-grid align-items-center my-md">
               <Col lg="6">
-                <h3 className="text-primary font-weight-light mb-2">
-                  Thank you for choosing beez-app!
+                <h3 className="text-primary font-weight-light mb-2">               
+                       Merci d'avoir choisi beez-app!
                 </h3>
                 <h4 className="mb-0 font-weight-light">
-                  Stay tuned for any news.
+                  Restez à l'écoute pour toute nouvelle.
                 </h4>
               </Col>
               <Col className="text-lg-center btn-wrapper" lg="6">
@@ -126,7 +126,7 @@ class CardsFooter extends React.Component {
                   </span>
                 </Button>
                 <UncontrolledTooltip delay={0} target="tooltip475038074">
-                  Follow us
+                  Suivez nous
                 </UncontrolledTooltip>
                 <Button
                   className="btn-icon-only rounded-circle ml-1"

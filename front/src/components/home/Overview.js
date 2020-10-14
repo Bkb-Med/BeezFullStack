@@ -33,12 +33,12 @@ class CardsFooter extends React.Component {
                 src={require("../../assets/img/iotconnect.png")}
               />
               <Col>
-                <h3 className="text-primary font-weight-900  mb-1">Overview</h3>
-                <p className="text-dark">Easy and Secure web application</p>
+                <h3 className="text-primary font-weight-900  mb-1">Aperçu</h3>
+                <p className="text-dark">Application Web simple et sécurisée</p>
                 <p className="lead text-dark">
-                  Our dashboard provide several services that you can use to
-                  monitor your data, and it provide an easy template to see what
-                  happening in your apiaries in real time.
+                  Notre tableau de bord fournit plusieurs services que vous pouvez utiliser pour
+                  surveiller vos données et fournit un modèle simple pour voir ce que
+                  se passe dans vos ruchers en temps réel.
                 </p>
               </Col>
             </Row>

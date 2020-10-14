@@ -30,16 +30,24 @@ class Tables extends React.Component {
    
     this.state = {
       locationDropDownValue: "Selectionner un Endroit",
+      typemsg:null,
+      msg:null,
       ENDid:null ,
       RCHref:null ,
       RCHid: null,
       dateTime:null,
-
+      modalmsg: false,
+      endroit:[],
       modal: false
          };
-          this.toggle = this.toggle.bind(this); 
+    this.toggle = this.toggle.bind(this); 
+    this.togglemsg=this.togglemsg.bind(this);
   }
-  
+  togglemsg() {
+    this.setState({
+      modalmsg: !this.state.modalmsg
+    });
+  }
  toggle() {
     this.setState({
       modal: !this.state.modal
@@ -62,28 +70,19 @@ class Tables extends React.Component {
       RCHid: e.id,
       dateTime: e.dateTime,
     });
-    console.log(this.state.RCHref)
-    this.toggle();
+     this.toggle();
 
 
   }
   deleteRuche = (e) => {
     const store = JSON.parse(localStorage.getItem('login'));
-    const ruche = {
-      id:this.state.RCHid,
-      reference: this.state.RCHref,
-      dateTime: this.state.dateTime,
-      endroit: {
-        id: this.state.ENDid,
-        reference:this.state.locationDropDownValue,
-      }
-    };
-
-       /* 'content-type': 'application/json',
-        'Accept': 'application/json',*/
-     
+    
+    this.setState({
+      RCHref:e.reference,
+      typemsg: "modal-fluid3",
+      msg:"Supprimée", })
+          
     try {
-     
      
        fetch(`http://localhost:8080/delete/ruche/${e.id}`,{
         method: "DELETE",
@@ -92,21 +91,22 @@ class Tables extends React.Component {
           'content-type': 'application/json',
           'Accept': 'application/json'
         },
-        body: JSON.stringify(ruche)}
+        }
        ).then(res => {
-          console.log("done")
-         console.log("message", res)
+          this.setState({
+              endroit: {
+                id: this.state.ENDid,
+                reference: this.state.locationDropDownValue
+              } })
+         this.onClickEndroitHandler(this.state.endroit);
+         this.togglemsg();
         
        })
-    
-     
     
  
     } catch (e) {
       console.log(e)
     }
-
-
   }
   onClickforSave = () => {
    
@@ -120,10 +120,9 @@ class Tables extends React.Component {
         reference:this.state.locationDropDownValue,
       }
     };
-
-       /* 'content-type': 'application/json',
-        'Accept': 'application/json',*/
-     
+    this.setState({ typemsg:"modal-fluid2",
+      msg:"Modifiée", })
+      
     try {
      
    
@@ -135,21 +134,32 @@ class Tables extends React.Component {
           'Accept': 'application/json'
         },
         body: JSON.stringify(ruche)}
-       ).then(res => {
-          console.log("done")
-         console.log("message", res)
+       ).then(e => {
+         this.setState({
+              endroit: {
+                id: this.state.ENDid,
+                reference: this.state.locationDropDownValue
+              } })
+         this.onClickEndroitHandler(this.state.endroit);
          this.toggle();
-       })
-    
-     
-    
- 
+         this.togglemsg();
+
+       }
+       );
     } catch (e) {
       console.log(e)
     }
   }
    
- 
+ formatDateAndTime = (date) => {
+  var d = []
+  var t=[]
+  d = date?.slice(0, 10).split("-");//19
+  t=date?.slice(11, 19).split(":");
+    if (typeof (d) != 'undefined') {
+      return d[2] + "-" + d[1] + "-" + d[0]+"  |  "+t[0]+":"+t[1]+":"+t[2]
+    }
+  };
   render() {
     const { endroits } = this.props.endroits
     
@@ -171,7 +181,7 @@ class Tables extends React.Component {
                               {e.reference}
                            
                       </th>
-                      <td>{e.dateTime}</td>
+                      <td>{this.formatDateAndTime(e.dateTime)}</td>
 
                       <td className="text-right">
                         <UncontrolledDropdown>
@@ -223,7 +233,7 @@ class Tables extends React.Component {
                   <UncontrolledCollapse toggler="#toggler">
                     <Card>
                       <CardBody>
-                        <InputRuche {...this.state.locationDropDownValue} />
+                        <InputRuche handleTable={this.onClickEndroitHandler} {...this.state.locationDropDownValue} />
                       </CardBody>
                     </Card>
                   </UncontrolledCollapse>
@@ -269,6 +279,17 @@ class Tables extends React.Component {
                   <ModalFooter>
                     <Button size="sm" color="danger" onClick={() => { this.onClickforSave() }}>Enregistrer</Button>
                   </ModalFooter>
+                </Modal>
+                 <Modal isOpen={this.state.modalmsg} toggle={this.togglemsg}  modalClassName={this.state.typemsg} className={this.props.className} backdrop={false}>
+           
+                        <ModalBody>
+                          <div className="d-flex flex-row">
+                          <h6 className="text-light">
+                              Ruche : {this.state.RCHref} {this.state.msg} avec succée..!</h6></div>
+                          <div className="d-flex flex-row-reverse mt-0">
+                            <Button color="secondary" onClick={this.togglemsg} size="sm" >Cancel</Button>
+                            </div>
+                        </ModalBody>
           </Modal>
                 <Table
                   className="align-items-center table-dark table-flush"

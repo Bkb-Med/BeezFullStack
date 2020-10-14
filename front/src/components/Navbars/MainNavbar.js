@@ -35,7 +35,7 @@ class DemoNavbar extends React.Component {
               <Nav className="navbar-nav-hover " navbar>
                 <NavItem>
                   <NavLink href="" style={{ paddingRight: 0 }}>
-                    Overview
+                    Aperçu
                   </NavLink>
                 </NavItem>
                 <NavItem>
@@ -45,17 +45,17 @@ class DemoNavbar extends React.Component {
                 </NavItem>
                 <NavItem>
                   <NavLink href="" style={{ paddingRight: 0 }}>
-                    About us
+                   À propos de nous
                   </NavLink>
                 </NavItem>
               </Nav>
               <Nav className="align-items-lg-center ml-lg-auto" navbar>
                 <NavItem className="d-none d-sm-block ml-lg-4">
-                  <Button color="secondary">
+                  <Button size="sm" color="secondary" onClick={this.props.handleclick}>
                     <span className="">
                       <i className="fa fa-sign-in mr-2 " />
                     </span>
-                    <span className="nav-link-inner--text ml-1">Login</span>
+                    <span className="nav-link-inner--text ml-1">Se connecter</span>
                   </Button>
                 </NavItem>
               </Nav>

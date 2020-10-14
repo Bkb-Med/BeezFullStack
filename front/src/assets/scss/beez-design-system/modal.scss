@@ -22,7 +22,36 @@
     background-color: #048f09;
   }
 }
-
+.modal-fluid2 {
+  .modal-dialog {
+    margin-top: 35rem;
+    margin-left: 60rem;
+    margin-bottom: 0;
+    width: 30vw; /* Occupy the 90% of the screen width */
+    max-width: 30vw;
+    height: 10px;
+    max-height: 10px;
+  }
+  .modal-content {
+    border-radius: 0.9rem;
+    background-color: #172b4d;
+  }
+}
+.modal-fluid3 {
+  .modal-dialog {
+    margin-top: 35rem;
+    margin-left: 60rem;
+    margin-bottom: 0;
+    width: 30vw; /* Occupy the 90% of the screen width */
+    max-width: 30vw;
+    height: 10px;
+    max-height: 10px;
+  }
+  .modal-content {
+    border-radius: 0.9rem;
+    background-color: #df3954;
+  }
+}
 @each $color, $value in $theme-colors {
   .modal-#{$color} {
     @include modal-variant($value);
