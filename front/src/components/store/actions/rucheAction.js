@@ -8,6 +8,8 @@ export const getRuche = (id) => async dispatch => {
       baseURL: 'http://localhost:8080',
       headers: {
         Authorization: `Bearer ${store.token}`,
+       'content-type': 'application/json',
+        'Accept': 'application/json',
       },
     });
     const res = await authAxios.get(`/endroit/ruches/${id}`);
