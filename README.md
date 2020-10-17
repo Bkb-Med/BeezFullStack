@@ -1,4 +1,4 @@
-# Beez Application web
+#  Application web "Beez"
 
 ![Alt text](/screenshots/login.png?raw=true "login")
 
