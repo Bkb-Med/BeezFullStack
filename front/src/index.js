@@ -14,7 +14,7 @@ ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" render={(props) => <MainDash {...props} />} />
+        <Route exact path="/index" render={(props) => <MainDash {...props} />} />
         <Route exact path="/login" render={(props) => <Authen {...props} />} />
        
        <Redirect to='/login'/>

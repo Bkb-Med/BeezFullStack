@@ -33,7 +33,7 @@ const SideBar = ({ isOpen, toggle }) => (
         <DropdownItem divider />
         <br />
         <NavItem className="nav-item-dashboard rounded-pill">
-          <NavLink tag={Link} to={"/"} style={{ color: "#fff" }}>
+          <NavLink tag={Link} to={"/index"} style={{ color: "#fff" }}>
             <FontAwesomeIcon icon={faWarehouse} className="mr-2" />
             Tableau de bord
           </NavLink>
@@ -45,7 +45,7 @@ const SideBar = ({ isOpen, toggle }) => (
           </NavLink>
         </NavItem>
         <NavItem className="nav-item-dashboard rounded-pill">
-          <NavLink tag={Link} to={"/about"} style={{ color: "#fff" }}>
+          <NavLink tag={Link} to={"/maps"} style={{ color: "#fff" }}>
             <FontAwesomeIcon icon={faMapMarkedAlt} className="mr-2" />
             Endroits
           </NavLink>
@@ -57,7 +57,7 @@ const SideBar = ({ isOpen, toggle }) => (
           </NavLink>
         </NavItem>
         <NavItem className="nav-item-dashboard rounded-pill">
-          <NavLink tag={Link} to={"/about"} style={{ color: "#fff" }}>
+          <NavLink tag={Link} to={"/agents"} style={{ color: "#fff" }}>
             <FontAwesomeIcon icon={faUsers} className="mr-2" />
             Agents
           </NavLink>
@@ -67,7 +67,7 @@ const SideBar = ({ isOpen, toggle }) => (
         <NavItem className="nav-item-dashboard rounded-pill">
           <NavLink tag={Link} to={"/about"} style={{ color: "#fff" }}>
             <FontAwesomeIcon icon={faQuestion} className="mr-2" />
-            Paramètres 
+            Paramètres
           </NavLink>
         </NavItem>
         {/*<SubMenu title="Pages" icon={faCopy} items={submenus[1]} />*/}

@@ -34,11 +34,18 @@ class indicators extends React.Component {
    
     this.state = {
     
-      locationDropDownValue: "endroit",
-      rucheDropDownValue: "ruche",
-      
+      locationDropDownValue: "Selectionner un Endroit:",
+      rucheDropDownValue: "Selectionner une Ruche:",
+      ddclicked: false,
+     
     };
-   
+    this.toggletbl = this.toggletbl.bind(this);
+  }
+
+   toggletbl() {
+     this.setState({
+      ddclicked: true
+    });
   }
  componentDidMount() {
     this.props.getEndroits()
@@ -54,7 +61,7 @@ class indicators extends React.Component {
     this.props.getTraffics(e.id)
     this.props.getTemps(e.id)
     this.props.getWeights(e.id)
-   
+    this.toggletbl();
   };
 formatDateAndTime = (date) => {
   var d = []
@@ -124,22 +131,25 @@ formatDateAndTime = (date) => {
     const { weights } = this.props.weights
     let idWGsensor = this.getSensorIdentifiant( weights)
     let TMrow = temps.map(e => {
-      return ( <tbody key={e.id}>
-                  <tr>
+      if (this.state.ddclicked === true) {
+        return (<tbody key={e.id}>
+          <tr>
                       
-          <td>{this.formatDateAndTime(e.dateTime)}</td>
-          <th scope="row">
-                        <span className="mb-0 text-sm">
-                             {e.value}
-                            </span>
-                         </th>
-                      <td>
-                         {this.formatValue(e.value)}
-                        </td>
-                    </tr></tbody>
-      );
+            <td>{this.formatDateAndTime(e.dateTime)}</td>
+            <th scope="row">
+              <span className="mb-0 text-sm">
+                {e.value}
+              </span>
+            </th>
+            <td>
+              {this.formatValue(e.value)}
+            </td>
+          </tr></tbody>
+        );
+      }else{return null}
     });
     let TRrow = traffics.map(e => {
+       if (this.state.ddclicked === true) {
       return ( <tbody key={e.id}>
                   <tr>
                       
@@ -153,9 +163,10 @@ formatDateAndTime = (date) => {
                          {this.formatValue(e.value)}
                         </td>
                     </tr></tbody>
-      );
+      ); }else{return null}
     });
     let WGrow = weights.map(e => {
+       if (this.state.ddclicked === true) {
       return ( <tbody key={e.id}>
                   <tr>
                       
@@ -169,7 +180,7 @@ formatDateAndTime = (date) => {
                          {this.formatValue(e.value)}
                         </td>
                     </tr></tbody>
-      );
+      ); }else{return null}
     });
     return (
       <>

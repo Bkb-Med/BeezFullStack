@@ -54,7 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests()
                 .antMatchers("/authenticate","add/ruche",
                         "/add/ruche","endroit/ruches/*","/update/ruche",
-                        "update/ruche/","delete/ruche/*","/delete/ruche/*").permitAll()
+                        "update/ruche/","delete/ruche/*","/delete/ruche/*","/add/agent","add/agent",
+                        "/update/agent","/delete/agent/*","update/agent","delete/agent/*").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated().and().cors()//.permitAll()//
                 .and().exceptionHandling().and().sessionManagement()

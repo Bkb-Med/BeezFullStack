@@ -1,12 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getEndroits } from '../store/actions/endroitsAction'
-import { getRuche } from '../store/actions/rucheAction'
-import { getTemps } from '../store/actions/tempsAction'
-import { getTraffics } from '../store/actions/trafficAction'
-import {getWeights} from '../store/actions/weightsAction'
-
-
+import { getEndroits } from "../store/actions/endroitsAction";
+import { getRuche } from "../store/actions/rucheAction";
+import { getTemps } from "../store/actions/tempsAction";
+import { getTraffics } from "../store/actions/trafficAction";
+import { getWeights } from "../store/actions/weightsAction";
 
 import Chart from "chart.js";
 
@@ -14,10 +12,10 @@ import { Line, Bar } from "react-chartjs-2";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-   Card,
+  Card,
   CardHeader,
   CardBody,
-   Container,
+  Container,
   Row,
   Col,
   CardTitle,
@@ -27,12 +25,10 @@ import {
   DropdownToggle,
 } from "reactstrap";
 import {
-
   faMapSigns,
-  
   faPercent,
   faThermometerQuarter,
-  faHourglassEnd
+  faHourglassEnd,
 } from "@fortawesome/free-solid-svg-icons";
 // core components
 import {
@@ -42,17 +38,15 @@ import {
   chartExample2,
 } from "variables/charts";
 
-
 class maindash extends React.Component {
   constructor(props) {
     super(props);
-   
+
     this.state = {
       activeNav: 1,
       chartExample1Data: "data1",
       locationDropDownValue: "endroit",
       rucheDropDownValue: "ruche",
-      
     };
     if (window.Chart) {
       parseOptions(Chart, chartOptions());
@@ -67,96 +61,95 @@ class maindash extends React.Component {
     });
   };
   componentDidMount() {
-    this.props.getEndroits()
-     }
- 
+    this.props.getEndroits();
+  }
+
   onClickEndroitHandler = (e) => {
     this.setState({ locationDropDownValue: e.reference });
-    this.props.getRuche(e.id)
-    
+    this.props.getRuche(e.id);
   };
   onClickRucheHandler = (e) => {
     this.setState({ rucheDropDownValue: e.reference });
-    this.props.getTraffics(e.id)
-    this.props.getTemps(e.id)
-    this.props.getWeights(e.id)
-   
+    this.props.getTraffics(e.id);
+    this.props.getTemps(e.id);
+    this.props.getWeights(e.id);
   };
-  filterlastValue = (data)=> {
-      var mostRecentDate = new Date(Math.max.apply(null, data.map(e => {
-        return new Date(e.dateTime);
-      })));
-      var mostRecentObject = data.filter(e => {
-        var d = new Date(e.dateTime);
-        return d.getTime() == mostRecentDate.getTime();
-      })[0];
-      
-      return mostRecentObject;
+  filterlastValue = (data) => {
+    var mostRecentDate = new Date(
+      Math.max.apply(
+        null,
+        data.map((e) => {
+          return new Date(e.dateTime);
+        })
+      )
+    );
+    var mostRecentObject = data.filter((e) => {
+      var d = new Date(e.dateTime);
+      return d.getTime() == mostRecentDate.getTime();
+    })[0];
 
- }
+    return mostRecentObject;
+  };
   formatDateAndTime = (date) => {
-    var d = []
+    var d = [];
+    var t = [];
     d = date?.slice(0, 10).split("-");
-    if (typeof (d) != 'undefined') {
-      return d[2] + "/" + d[1] + "/" + d[0]
+    t = date?.slice(11, 19).split(":");
+    if (typeof d != "undefined") {
+      return d[2] + "-" + d[1] + "-" + d[0] + "|" + t[0] + ":" + t[1];
     }
   };
-    
+
   render() {
-   
-    const { endroits } = this.props.endroits
-    
-    let endroitsItems = endroits.map(e => {
+    const { endroits } = this.props.endroits;
+
+    let endroitsItems = endroits.map((e) => {
       return (
         <DropdownItem key={e.id} onClick={() => this.onClickEndroitHandler(e)}>
           {e.reference}
         </DropdownItem>
       );
     });
-    const { ruches } =this.props.ruches
-    
-     let rucheItems= ruches.map((e) => {
+    const { ruches } = this.props.ruches;
+
+    let rucheItems = ruches.map((e) => {
       return (
         <DropdownItem key={e.id} onClick={() => this.onClickRucheHandler(e)}>
           {e.reference}
         </DropdownItem>
       );
-     });
-    const { traffics } = this.props.traffics
-    const { temps } = this.props.temps
-    const {weights}=this.props.weights
-    let lastTFvalue = this.filterlastValue(traffics)
-    let lastTMvalue = this.filterlastValue(temps)
-    let lastWGvalue = this.filterlastValue(weights)
-    
-    let dtTFvalue = this.formatDateAndTime(lastTFvalue?.dateTime)
-    let dtTMvalue = this.formatDateAndTime(lastTMvalue?.dateTime)
-    let dtWGvalue = this.formatDateAndTime(lastWGvalue?.dateTime)
+    });
+    const { traffics } = this.props.traffics;
+    const { temps } = this.props.temps;
+    const { weights } = this.props.weights;
+    let lastTFvalue = this.filterlastValue(traffics);
+    let lastTMvalue = this.filterlastValue(temps);
+    let lastWGvalue = this.filterlastValue(weights);
+
+    let dtTFvalue = this.formatDateAndTime(lastTFvalue?.dateTime);
+    let dtTMvalue = this.formatDateAndTime(lastTMvalue?.dateTime);
+    let dtWGvalue = this.formatDateAndTime(lastWGvalue?.dateTime);
     const dataTM = {
-    
-      labels: temps.map(e => {
-        return this.formatDateAndTime(e.dateTime)
+      labels: temps.map((e) => {
+        return this.formatDateAndTime(e.dateTime);
       }),
       datasets: [
         {
-        
-          data: temps.map(e => {
-        return e.value
-      }),
+          data: temps.map((e) => {
+            return e.value;
+          }),
         },
       ],
     };
     const dataTF = {
-    
-      labels: traffics.map(e => {
-        return this.formatDateAndTime(e.dateTime)
+      labels: traffics.map((e) => {
+        return this.formatDateAndTime(e.dateTime);
       }),
       datasets: [
         {
-        
-          data: traffics.map(e => {
-        return e.value
-      }),
+          data: traffics.map((e) => {
+            return e.value;
+          }),
         },
       ],
     };
@@ -263,7 +256,9 @@ class maindash extends React.Component {
                       >
                         Température
                       </CardTitle>
-                      <span className="h4 font-weight-bold mb-0">{lastTMvalue?.value} °C</span>
+                      <span className="h4 font-weight-bold mb-0">
+                        {lastTMvalue?.value} °C
+                      </span>
                     </div>
                     <Col className="col-auto">
                       <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -294,11 +289,13 @@ class maindash extends React.Component {
                       >
                         Poids
                       </CardTitle>
-                      <span className="h4 font-weight-bold mb-0">{lastWGvalue?.value} % </span>
+                      <span className="h4 font-weight-bold mb-0">
+                        {lastWGvalue?.value} %{" "}
+                      </span>
                     </div>
                     <Col className="col-auto">
                       <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                        <FontAwesomeIcon icon={  faHourglassEnd} />
+                        <FontAwesomeIcon icon={faHourglassEnd} />
                       </div>
                     </Col>
                   </Row>
@@ -315,10 +312,9 @@ class maindash extends React.Component {
               </Card>
             </Col>
           </Row>
-        
         </Container>
         <Container className="mt-2 mb-auto" fluid>
-            <Row xs="10">
+          <Row xs="10">
             <Col className="mb-5 mb-xl-0 " xl="12">
               <Card className="bg-gradient-default shadow">
                 <CardHeader className="bg-transparent">
@@ -329,9 +325,7 @@ class maindash extends React.Component {
                       </h6>
                       <h5 className="text-white mb-0">Température</h5>
                     </div>
-                    <div className="col">
-                     
-                    </div>
+                    <div className="col"></div>
                   </Row>
                 </CardHeader>
                 <CardBody>
@@ -351,7 +345,6 @@ class maindash extends React.Component {
                 <CardHeader className="bg-transparent">
                   <Row className="align-items-center">
                     <div className="col">
-                     
                       <h2 className="mb-0">Traffic</h2>
                     </div>
                   </Row>
@@ -359,10 +352,7 @@ class maindash extends React.Component {
                 <CardBody>
                   {/* Chart */}
                   <div className="chart">
-                    <Bar
-                      data={dataTF}
-                      options={chartExample2.options}
-                    />
+                    <Bar data={dataTF} options={chartExample2.options} />
                   </div>
                 </CardBody>
               </Card>
@@ -380,20 +370,18 @@ function mapStateToProps(state) {
     temps: state.temps,
     weights: state.weights,
     traffics: state.traffics,
-    
-        };
+  };
 }
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getRuche: idEnd => dispatch(getRuche(idEnd)),
-    getEndroits: () => dispatch(getEndroits()), 
-    getTemps: idRch => dispatch(getTemps(idRch)),
-    getTraffics: idRch => dispatch(getTraffics(idRch)),
-    getWeights:idRch => dispatch(getWeights(idRch))
-   
+    getRuche: (idEnd) => dispatch(getRuche(idEnd)),
+    getEndroits: () => dispatch(getEndroits()),
+    getTemps: (idRch) => dispatch(getTemps(idRch)),
+    getTraffics: (idRch) => dispatch(getTraffics(idRch)),
+    getWeights: (idRch) => dispatch(getWeights(idRch)),
   };
 };
 maindash.defaultProps = {
-    recentTrafic: []
+  recentTrafic: [],
 };
 export default connect(mapStateToProps, mapDispatchToProps)(maindash);

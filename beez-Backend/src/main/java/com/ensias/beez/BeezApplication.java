@@ -58,17 +58,17 @@ public class BeezApplication {
 	CommandLineRunner runner() {
 		return args -> {
 			Endroit endroit1 = new Endroit("Benslimane Centre");
-			Endroit endroit2 = new Endroit("Mellila Centre");
+			Endroit endroit2 = new Endroit("Mellila Centre, proche de benslimane");
 			endroitRepo.save(endroit1);
 			endroitRepo.save(endroit2);
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 			Date date = simpleDateFormat.parse("2020-08-04 19:37");
-			Ruche r1 = new Ruche("R001",date,endroit1);
-			Ruche r2 = new Ruche("R002",date,endroit2);
-			Ruche r3 = new Ruche("R003",date,endroit1);
-			Ruche r4 = new Ruche("R004",date,endroit2);
-			Ruche r5 = new Ruche("R005",date,endroit1);
-			Ruche r6 = new Ruche("R006",date,endroit2);
+			Ruche r1 = new Ruche("RIRHQIL1",date,endroit1);
+			Ruche r2 = new Ruche("RYXSYB2",date,endroit2);
+			Ruche r3 = new Ruche("ROPMHN3",date,endroit1);
+			Ruche r4 = new Ruche("RAWREIV4",date,endroit2);
+			Ruche r5 = new Ruche("RZDKNJ5",date,endroit1);
+			Ruche r6 = new Ruche("RUNJKUS6",date,endroit2);
 			rucheRepo.save(r1);
 			rucheRepo.save(r2);
 			rucheRepo.save(r3);
@@ -77,8 +77,8 @@ public class BeezApplication {
 			rucheRepo.save(r6);
 			for(int i=1;i<10;i++){
 				Random rand = new Random();
-				long rangebegin = Timestamp.valueOf("2016-02-08 00:00:00").getTime();
-				long rangeend = Timestamp.valueOf("2020-02-08 00:58:00").getTime();
+				long rangebegin = Timestamp.valueOf("2020-01-01 00:00:00").getTime();
+				long rangeend = Timestamp.valueOf("2020-12-12 00:58:00").getTime();
 				long diff = rangeend - rangebegin + 1;
 				Timestamp randdt = new Timestamp(rangebegin + (long)(Math.random() * diff));
 				tempRepo.save(new TempSensor("TM01", Math.round((rand.nextInt(40)+i)*100)/100.0d, randdt, r1));

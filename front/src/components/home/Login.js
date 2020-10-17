@@ -62,7 +62,7 @@ class Login extends React.Component {
          rs = rs.split('"')[1];
          
          
-         if (rs==="timestamp") { history.push("/login") }else{history.push("/") };
+         if (rs==="timestamp") { history.push("/login") }else{history.push("/index") };
         })
       })
      

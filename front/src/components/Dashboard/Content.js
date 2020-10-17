@@ -3,19 +3,23 @@ import classNames from "classnames";
 import { Container } from "reactstrap";
 import { Switch, Route } from "react-router-dom";
 
-import Topbar from "./Topbar";
 import ApiariesTbl from "components/Contents/ApiariesTbl";
 import MainDash from "components/Contents/MainDash";
-import Indicators from "components/Contents/indicators"
+import Indicators from "components/Contents/indicators";
+import Agents from "components/Contents/AgentTBL";
+import Maps from "components/Contents/Maps";
 const Content = ({ sidebarIsOpen, toggleSidebar }) => (
   <Container
     fluid
     className={classNames("content", { "is-open": sidebarIsOpen })}
   >
-   
     <div className="py-lg-7">
       <Switch>
-        <Route exact path="/" render={(props) => <MainDash {...props} />} />
+        <Route
+          exact
+          path="/index"
+          render={(props) => <MainDash {...props} />}
+        />
         <Route
           exact
           path="/apiaries"
@@ -26,16 +30,9 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
           path="/indicators"
           render={(props) => <Indicators {...props} />}
         />
-        <Route exact path="/Pages" component={() => "Pages"} />
-        <Route exact path="/faq" component={() => "FAQ"} />
-        <Route exact path="/contact" component={() => "Contact"} />
-        <Route exact path="/Home-1" component={() => "Home-1"} />
-        <Route exact path="/Home-2" component={() => "Home-2"} />
-        <Route exact path="/Home-3" component={() => "Home-3"} />
-        <Route exact path="/page-1" component={() => "page-1"} />
-        <Route exact path="/page-2" component={() => "sfff"} />
-        <Route exact path="/page-3" component={() => "page-3"} />
-        <Route exact path="/page-4" component={() => "page-4"} />
+
+        <Route exact path="/maps" render={(props) => <Maps {...props} />} />
+        <Route exact path="/agents" render={(props) => <Agents {...props} />} />
       </Switch>
     </div>
   </Container>
