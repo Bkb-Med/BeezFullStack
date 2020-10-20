@@ -42,7 +42,7 @@ public class BeezApplication {
 	@PostConstruct
 	public void initUsers() {
 
-	    Admin admin1 = new Admin(0,"GB162360","Mhamed Boukbab","Boukbab.med@gmail.com",65824);
+	    Admin admin1 = new Admin(0,"..","...","....",65824);
 	    Agent agent1 = new Agent(0,"JK005691","brahim ABDO","abdo@gmail.com",65845);
 	    adminRepository.save(admin1);
         agentRepository.save(agent1);
